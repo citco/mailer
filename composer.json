@@ -1,0 +1,20 @@
+{
+    "name": "citco/mailer",
+    "description": "CIT Mailer class an extension from the laravels default mailer class.",
+    "authors": [
+        {
+            "name": "amir",
+            "email": "ammontazer@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "laravel/framework": "4.1.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "Citco\\Mailer": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}
