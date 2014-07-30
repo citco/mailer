@@ -38,6 +38,13 @@ class Mailer extends \Illuminate\Mail\Mailer {
 	public $developer_addr;
 
 	/**
+	 * Return path email address.
+	 *
+	 * @var string
+	 */
+	public $return_path;
+
+	/**
 	 * Send a Swift Message instance.
 	 *
 	 * @param  \Swift_Message  $message
@@ -57,16 +64,40 @@ class Mailer extends \Illuminate\Mail\Mailer {
 
 		$to = $message->getTo();
 		empty($to) OR $to = key($to);
+
+		/*
+		 * Set custom headers for tracking
+		 */
 		$headers = $message->getHeaders();
 		$headers->addTextHeader('X-Site-ID', $this->x_site_id);
 		$headers->addTextHeader('X-User-ID', base64_encode(gzcompress($to)));
 
+		/*
+		 * Set to address based on environment
+		 */
 		if (strcasecmp($this->environment, 'production') != 0)
 		{
 			list($dev_addr, $dev_name) = $this->developer_addr;
 			$message->setTo($dev_addr, $dev_name);
 		}
 
+		/*
+		 * Set return path.
+		 */
+		$return_path = $this->generateReturnPathEmail(key($message->getTo()));
+		$message->setReturnPath($return_path);
+
 		parent::sendSwiftMessage($message);
+	}
+
+	protected function generateReturnPathEmail($email, $sender = false)
+	{
+		$email = str_replace('@', '=', $email);
+
+		list($address, $domain) = explode('@', $this->return_path);
+
+		$address = $address . '+' . $email . ($sender ? '+' . $sender : '');
+
+		return implode('@', array($address, $domain));
 	}
 }
