@@ -29,7 +29,7 @@ In your `composer.json`:
     }
 }
 ```
-After updating composer, add the ServiceProvider to the providers array in app/config/app.php
+After updating composer, add the MailerServiceProvider to the providers array in app/config/app.php
 
     'Citco\Mailer\MailerServiceProvider',
 
