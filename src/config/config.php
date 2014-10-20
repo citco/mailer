@@ -17,6 +17,6 @@ return array(
 	'dev.address' => 'developer@example.com',
 	'dev.name' => 'Devel',
 
-	'return.path' => 'r@example.com',
+	'return.path' => '',
 
 );

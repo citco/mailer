@@ -84,8 +84,11 @@ class Mailer extends \Illuminate\Mail\Mailer {
 		/*
 		 * Set return path.
 		 */
-		$return_path = $this->generateReturnPathEmail(key($message->getTo()));
-		$message->setReturnPath($return_path);
+		if ($this->return_path)
+		{
+			$return_path = $this->generateReturnPathEmail(key($message->getTo()));
+			$message->setReturnPath($return_path);
+		}
 
 		parent::sendSwiftMessage($message);
 	}
