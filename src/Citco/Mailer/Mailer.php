@@ -70,7 +70,7 @@ class Mailer extends \Illuminate\Mail\Mailer {
 		 */
 		$headers = $message->getHeaders();
 		$headers->addTextHeader('X-Site-ID', $this->x_site_id);
-		$headers->addTextHeader('X-User-ID', base64_encode(gzcompress($to)));
+		$headers->addTextHeader('X-User-ID', base64_encode($to));
 
 		/*
 		 * Set to address based on environment
