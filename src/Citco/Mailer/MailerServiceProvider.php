@@ -20,7 +20,7 @@ class MailerServiceProvider extends BaseMailServiceProvider {
 	 */
 	public function register()
 	{
-		$this->package('cit/mailer');
+		$this->package('citco/mailer');
 
 		$me = $this;
 

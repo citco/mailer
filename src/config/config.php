@@ -9,9 +9,8 @@ return array(
 	'noreply.name' => 'no-reply',
 
 	// A copy of all emails should be sent to this address
-	'log.enabled' => false,
-	'log.address' => 'log@example.com',
-	'log.name' => 'Log',
+	'log.address' => null,
+	'log.name' => null,
 
 	// All emails in local and dev environment should be sent to this address
 	'dev.address' => 'developer@example.com',
