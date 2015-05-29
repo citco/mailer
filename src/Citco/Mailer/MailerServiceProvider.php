@@ -18,7 +18,7 @@ class MailerServiceProvider extends BaseMailServiceProvider {
 
 		$this->app->singleton('mailer', function($app)
 		{
-			$me->registerSwiftMailer();
+			$this->registerSwiftMailer();
 
 			// Once we have create the mailer instance, we will set a container instance
 			// on the mailer. This allows us to resolve mailer classes via containers
