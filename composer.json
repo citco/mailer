@@ -9,7 +9,7 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "illuminate/mail": "4.2.*"
+        "illuminate/mail": "~5"
     },
     "autoload": {
         "psr-0": {

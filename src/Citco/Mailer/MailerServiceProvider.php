@@ -6,36 +6,28 @@ use Illuminate\Mail\MailServiceProvider as BaseMailServiceProvider;
 class MailerServiceProvider extends BaseMailServiceProvider {
 
 	/**
-	 * Indicates if loading of the provider is deferred.
-	 *
-	 * @var bool
-	 */
-	protected $defer = false;
-
-
-	/**
 	 * Register the service provider.
 	 *
 	 * @return void
 	 */
 	public function register()
 	{
-		$this->package('citco/mailer');
+		$this->publishes([
+		    __DIR__.'../../../config/mailer.php' => config_path('mailer.php'),
+		]);
 
-		$me = $this;
-
-		$this->app->bindShared('mailer', function($app) use ($me)
+		$this->app->singleton('mailer', function($app)
 		{
 			$me->registerSwiftMailer();
 
 			// Once we have create the mailer instance, we will set a container instance
 			// on the mailer. This allows us to resolve mailer classes via containers
 			// for maximum testability on said classes instead of passing Closures.
-			$mailer = new Mailer($app['view'], $app['swift.mailer']);
+			$mailer = new Mailer(
+				$app['view'], $app['swift.mailer'], $app['events']
+			);
 
-			$mailer->setLogger($app['log'])->setQueue($app['queue']);
-
-			$mailer->setContainer($app);
+			$this->setMailerDependencies($mailer, $app);
 
 			// If a "from" address is set, we will set it on the mailer so that all mail
 			// messages sent by the applications will utilize the same "from" address
@@ -47,13 +39,11 @@ class MailerServiceProvider extends BaseMailServiceProvider {
 				$mailer->alwaysFrom($from['address'], $from['name']);
 			}
 
-			$mailer->environment = $app->environment();
-
-			$mailer->x_site_id = $app['config']->get('mailer::site.id');
-			$mailer->sender_addr = array($app['config']->get('mailer::noreply.address'), $app['config']->get('mailer::noreply.name'));
-			$mailer->log_addr = array($app['config']->get('mailer::log.address'), $app['config']->get('mailer::log.name'));
-			$mailer->developer_addr = array($app['config']->get('mailer::dev.address'), $app['config']->get('mailer::dev.name'));
-			$mailer->return_path = $app['config']->get('mailer::return.path');
+			$mailer->x_site_id = config('mailer.site.id');
+			$mailer->sender_addr = array(config('mailer.noreply.address'), config('mailer.noreply.name'));
+			$mailer->log_addr = array(config('mailer.log.address'), config('mailer.log.name'));
+			$mailer->developer_addr = array(config('mailer.dev.address'), config('mailer.dev.name'));
+			$mailer->return_path = config('mailer.return.path');
 
 			// Here we will determine if the mailer should be in "pretend" mode for this
 			// environment, which will simply write out e-mail to the logs instead of
@@ -65,15 +55,4 @@ class MailerServiceProvider extends BaseMailServiceProvider {
 			return $mailer;
 		});
 	}
-
-	/**
-	 * Get the services provided by the provider.
-	 *
-	 * @return array
-	 */
-	public function provides()
-	{
-		return array();
-	}
-
 }
