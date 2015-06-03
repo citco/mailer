@@ -13,7 +13,7 @@ class MailerServiceProvider extends BaseMailServiceProvider {
 	public function register()
 	{
 		$this->publishes([
-		    __DIR__.'../../../config/mailer.php' => config_path('mailer.php'),
+		    __DIR__.'/../../config/mailer.php' => config_path('mailer.php'),
 		]);
 
 		$this->app->singleton('mailer', function($app)
