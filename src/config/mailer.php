@@ -2,20 +2,20 @@
 return array(
 
 	// This variable is used to set X-Site-ID
-	'site.id' => 'site',
+	'site_id' => 'site',
 
 	// All outgoing emails should be sent from this address
-	'noreply.address' => 'noreply@example.com',
-	'noreply.name' => 'no-reply',
+	'noreply_address' => 'noreply@example.com',
+	'noreply_name' => 'no-reply',
 
 	// A copy of all emails should be sent to this address
-	'log.address' => null,
-	'log.name' => null,
+	'log_address' => null,
+	'log_name' => null,
 
 	// All emails in local and dev environment should be sent to this address
-	'dev.address' => 'developer@example.com',
-	'dev.name' => 'Devel',
+	'dev_address' => 'developer@example.com',
+	'dev_name' => 'Devel',
 
-	'return.path' => '',
+	'return_path' => '',
 
 );

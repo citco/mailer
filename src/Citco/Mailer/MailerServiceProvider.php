@@ -39,11 +39,11 @@ class MailerServiceProvider extends BaseMailServiceProvider {
 				$mailer->alwaysFrom($from['address'], $from['name']);
 			}
 
-			$mailer->x_site_id = config('mailer.site.id');
-			$mailer->sender_addr = array(config('mailer.noreply.address'), config('mailer.noreply.name'));
-			$mailer->log_addr = array(config('mailer.log.address'), config('mailer.log.name'));
-			$mailer->developer_addr = array(config('mailer.dev.address'), config('mailer.dev.name'));
-			$mailer->return_path = config('mailer.return.path');
+			$mailer->x_site_id = config('mailer.site_id');
+			$mailer->sender_addr = array(config('mailer.noreply_address'), config('mailer.noreply_name'));
+			$mailer->log_addr = array(config('mailer.log_address'), config('mailer.log_name'));
+			$mailer->developer_addr = array(config('mailer.dev_address'), config('mailer.dev_name'));
+			$mailer->return_path = config('mailer.return_path');
 
 			// Here we will determine if the mailer should be in "pretend" mode for this
 			// environment, which will simply write out e-mail to the logs instead of
