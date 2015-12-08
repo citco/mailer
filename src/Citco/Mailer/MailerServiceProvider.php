@@ -44,6 +44,7 @@ class MailerServiceProvider extends BaseMailServiceProvider {
 			$mailer->log_addr = array(config('mailer.log_address'), config('mailer.log_name'));
 			$mailer->developer_addr = array(config('mailer.dev_address'), config('mailer.dev_name'));
 			$mailer->return_path = config('mailer.return_path');
+			$mailer->environment = $app->environment();
 
 			// Here we will determine if the mailer should be in "pretend" mode for this
 			// environment, which will simply write out e-mail to the logs instead of
