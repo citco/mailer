@@ -13,8 +13,8 @@ class MailerServiceProvider extends BaseMailServiceProvider {
 	public function register()
 	{
 		$this->publishes([
-		    __DIR__.'/../../config/mailer.php' => config_path('mailer.php'),
-		]);
+			                 __DIR__.'/../../config/mailer.php' => config_path('mailer.php'),
+		                 ]);
 
 		$this->app->singleton('mailer', function($app)
 		{
@@ -40,9 +40,22 @@ class MailerServiceProvider extends BaseMailServiceProvider {
 			}
 
 			$mailer->x_site_id = config('mailer.site_id');
-			$mailer->sender_addr = array(config('mailer.noreply_address'), config('mailer.noreply_name'));
-			$mailer->log_addr = array(config('mailer.log_address'), config('mailer.log_name'));
-			$mailer->developer_addr = array(config('mailer.dev_address'), config('mailer.dev_name'));
+
+			if (! empty(config('mailer.noreply_address')))
+			{
+				$mailer->sender_addr = array(config('mailer.noreply_address'), config('mailer.noreply_name'));
+			}
+
+			if (! empty(config('mailer.log_address')))
+			{
+				$mailer->log_addr = array(config('mailer.log_address'), config('mailer.log_name'));
+			}
+
+			if (! empty(config('mailer.dev_address')))
+			{
+				$mailer->developer_addr = array(config('mailer.dev_address'), config('mailer.dev_name'));
+			}
+
 			$mailer->return_path = config('mailer.return_path');
 			$mailer->environment = $app->environment();
 
